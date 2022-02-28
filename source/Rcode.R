@@ -1,5 +1,8 @@
 # Load data set
+
 Incarceration <- read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
+
+setwd("~/Documents/info201code/a3-Trangtran62")
 
 # Summary: number of features and what are they
 ncol(Incarceration)
@@ -7,16 +10,14 @@ nrow(Incarceration)
 features <- colnames(Incarceration)
 print(features)
 
-#Set wd and packages
-
 library(dplyr)
-setwd("~/Documents/info201code/a3-Trangtran62")
 library(RcppRoll)
 library(tidyverse)
 
 #Select data with specific features to work with
 df <- Incarceration %>%
   select(year, state, county_name, total_pop_15to64, aapi_pop_15to64, black_pop_15to64, latinx_pop_15to64, native_pop_15to64, white_pop_15to64, total_jail_pop, aapi_jail_pop, black_jail_pop, latinx_jail_pop, native_jail_pop, white_jail_pop, other_race_jail_pop, total_jail_adm, total_jail_dis, total_prison_pop, aapi_prison_pop, black_prison_pop, latinx_prison_pop, native_prison_pop, white_prison_pop, aapi_prison_adm, black_prison_adm, latinx_prison_adm, native_prison_adm, other_race_prison_adm, white_prison_adm)
+
 View(df)
 
 # Data wrangling to get 5 values summarizing the data set
@@ -27,12 +28,17 @@ lagest_prison_population <- df %>%
   filter(total_prison_pop == max(total_prison_pop)) %>%
   summarise(total_prison_pop)
 
+largest_prison_population <- lagest_prison_population$total_prison_pop
+
 smallest_prison_population <- df %>%
   group_by(year) %>%
   summarise(total_prison_pop = sum(total_prison_pop, na.rm = TRUE)) %>%
   filter(total_prison_pop > 0) %>% # There are no data in 2017 and 2018, so the total of prison population in those two years can be 0.
   filter(total_prison_pop == min(total_prison_pop)) %>%
   summarise(total_prison_pop)
+
+smallest_prison_population <- smallest_prison_population$total_prison_pop
+
 # What is the largest/smallest prison population over total population ratio in a year?
 largest_prison_population_ratio <- df %>%
   group_by(year) %>%
@@ -42,6 +48,9 @@ largest_prison_population_ratio <- df %>%
   filter(ratio == max(ratio)) %>%
   summarise(ratio)
 
+largest_prison_population_ratio <- largest_prison_population_ratio$ratio
+largest_prison_population_ratio <- round(largest_prison_population_ratio, 3)
+
 smallest_prison_population_ratio <- df %>%
   group_by(year) %>%
   mutate(ratio = total_prison_pop / total_pop_15to64) %>%
@@ -49,6 +58,8 @@ smallest_prison_population_ratio <- df %>%
   summarise(ratio = mean(ratio)) %>%
   filter(ratio == min(ratio)) %>%
   summarise(ratio)
+
+smallest_prison_population_ratio <- smallest_prison_population_ratio$ratio
 # Average total prison population of Black people over the years?
 df1 <- df %>%
   group_by(year) %>%
@@ -64,7 +75,7 @@ df2 <- df %>%
 average_prison_white <- round(mean(df2$total_white_prison))
 
 # Trend over time graph
-# Black jail and prison population over time
+# Jail and prison population over time for each race
 df[is.na(df)] <- 0
 df3 <- df %>%
   select(year, aapi_jail_pop, black_jail_pop, native_jail_pop, white_jail_pop, latinx_jail_pop, aapi_prison_pop, black_prison_pop, native_prison_pop, white_prison_pop, latinx_prison_pop) %>%
@@ -179,5 +190,3 @@ usmap::plot_usmap(data = map_df, values = "total_prison_pop_rate", color = "grey
         axis.text.y=element_blank(),
         axis.title.x=element_blank(),
         axis.title.y=element_blank())
-  
-  
