@@ -1,3 +1,5 @@
+install.packages('plyr', repos = "http://cran.us.r-project.org")
+
 # Load data set
 
 Incarceration <- read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
