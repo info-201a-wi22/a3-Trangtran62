@@ -1,6 +1,6 @@
 ---
 title: "Incarceration rate in the US"
-author: Trang T Tran
+author: Trang Tran
 date: "02/25/2022"
 output: html_document
 ---
