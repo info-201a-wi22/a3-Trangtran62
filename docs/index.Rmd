@@ -21,7 +21,7 @@ The data showed that the average black prison population each year is `r average
 
 # Trend lines
 
-Here is a graph showcasing prison population of each racial groups over time from 1970 to 2018
+Here is a graph showcasing prison population of each racial groups over time from 1970 to 2018. I particularly chose this graph because I want to address the question of how the prison population differs across different race in the US. One noteworthy pattern here is that black people make up the majority of the prison population, slightly higher than white prison population, despite being a minority group.
 
 ```{r Trendgraph, echo=FALSE}
 plot(Trendgraph)
@@ -29,7 +29,7 @@ plot(Trendgraph)
 
 # Comparison
 
-Here is a graph expressing the ratio between incarcerated population and total population of Black and White communities over time from 1970 to 2018
+Here is a graph expressing the ratio between incarcerated population and total population of Black and White communities over time from 1970 to 2018. From the pattern emerging from the trend line graph above, I want to compare incarceration rate per 100000 people between Black and White population, to have a clearer picture of the disparity in incarceration rate between the two racial group. The graph highlights that Black people are disproportionately incarcerated compared to white people, with a staggering gap.
 
 ```{r comparison_graph, echo=FALSE}
 plot(comparison_graph)
@@ -37,7 +37,7 @@ plot(comparison_graph)
 
 # Map
 
-The incarcerated population and total population ratio is showed geographically within the US in 2018
+The incarcerated population and total population ratio is showed geographically within the US in 2018. From the map, we can see the South which has a major history of slavery and racism, generally has higher incarceration rate compared to the rest of the US. 
 
 ```{r us_map, echo=FALSE}
 us_map <- usmap::us_map(region = "states")
